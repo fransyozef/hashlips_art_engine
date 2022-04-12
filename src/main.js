@@ -372,6 +372,7 @@ const startCreating = async () => {
     const layers = layersSetup(
       layerConfigurations[layerConfigIndex].layersOrder
     );
+    const layersOrder = layerConfigurations[layerConfigIndex].layersOrder;
     while (
       editionCount <= layerConfigurations[layerConfigIndex].growEditionSizeTo
     ) {
