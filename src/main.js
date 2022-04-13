@@ -136,11 +136,13 @@ const drawBackground = () => {
 
 const addMetadata = (_dna, _edition) => {
   let dateTime = Date.now();
+  const hashedDna = sha1(_dna);
+  const imageFilename = dnaAsJsonFilename ? hashedDna : _edition;
   let tempMetadata = {
     name: `${namePrefix} #${_edition}`,
     description: description,
-    image: `${baseUri}/${_edition}.png`,
-    dna: sha1(_dna),
+    image: `${baseUri}/${imageFilename}.png`,
+    dna: hashedDna,
     edition: _edition,
     date: dateTime,
     ...extraMetadata,
@@ -155,7 +157,7 @@ const addMetadata = (_dna, _edition) => {
       description: tempMetadata.description,
       //Added metadata for solana
       seller_fee_basis_points: solanaMetadata.seller_fee_basis_points,
-      image: `${_edition}.png`,
+      image: `${imageFilename}.png`,
       //Added metadata for solana
       external_url: solanaMetadata.external_url,
       edition: _edition,
@@ -164,7 +166,7 @@ const addMetadata = (_dna, _edition) => {
       properties: {
         files: [
           {
-            uri: `${_edition}.png`,
+            uri: `${imageFilename}.png`,
             type: "image/png",
           },
         ],
@@ -420,13 +422,13 @@ const startCreating = async () => {
           debugLogs
             ? console.log("Editions left to create: ", abstractedIndexes)
             : null;
-          saveImage(abstractedIndexes[0]);
+          const hashedDNA = sha1(newDna);
+          const pngFilename = dnaAsJsonFilename ? hashedDNA : abstractedIndexes[0];
+          saveImage(pngFilename);
           addMetadata(newDna, abstractedIndexes[0]);
           saveMetaDataSingleFile(abstractedIndexes[0]);
           console.log(
-            `Created edition: ${abstractedIndexes[0]}, with DNA: ${sha1(
-              newDna
-            )}`
+            `Created edition: ${abstractedIndexes[0]}, with DNA: ${hashedDNA}`
           );
         });
         dnaList.add(filterDNAOptions(newDna));
