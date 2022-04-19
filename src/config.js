@@ -101,7 +101,8 @@ const preview_gif = {
 };
 
 const emptyName = 'empty';
-const dnaAsJsonFilename = true;
+const dnaAsJsonFilename = false;
+const useRandomFilenames = true;
 
 module.exports = {
   format,
@@ -124,4 +125,5 @@ module.exports = {
   preview_gif,
   emptyName,
   dnaAsJsonFilename,
+  useRandomFilenames,
 };

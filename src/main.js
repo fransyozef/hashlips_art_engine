@@ -23,6 +23,7 @@ const {
   gif,
   emptyName,
   dnaAsJsonFilename,
+  useRandomFilenames,
 } = require(`${basePath}/src/config.js`);
 const canvas = createCanvas(format.width, format.height);
 const ctx = canvas.getContext("2d");
@@ -116,9 +117,10 @@ const layersSetup = (layersOrder) => {
   return layers;
 };
 
-const saveImage = (_editionCount) => {
+const saveImage = (_editionCount,_dna) => {
+  const filename = useRandomFilenames ? sha1(_dna) : _editionCount;
   fs.writeFileSync(
-    `${buildDir}/images/${_editionCount}.png`,
+    `${buildDir}/images/${filename}.png`,
     canvas.toBuffer("image/png")
   );
 };
@@ -137,11 +139,11 @@ const drawBackground = () => {
 const addMetadata = (_dna, _edition) => {
   let dateTime = Date.now();
   const hashedDna = sha1(_dna);
-  const imageFilename = dnaAsJsonFilename ? hashedDna : _edition;
+  const imagefilename = useRandomFilenames ? hashedDna : _edition;
   let tempMetadata = {
     name: `${namePrefix} #${_edition}`,
     description: description,
-    image: `${baseUri}/${imageFilename}.png`,
+    image: `${baseUri}/${imagefilename}.png`,
     dna: hashedDna,
     edition: _edition,
     date: dateTime,
@@ -157,7 +159,7 @@ const addMetadata = (_dna, _edition) => {
       description: tempMetadata.description,
       //Added metadata for solana
       seller_fee_basis_points: solanaMetadata.seller_fee_basis_points,
-      image: `${imageFilename}.png`,
+      image: `${imagefilename}.png`,
       //Added metadata for solana
       external_url: solanaMetadata.external_url,
       edition: _edition,
@@ -166,7 +168,7 @@ const addMetadata = (_dna, _edition) => {
       properties: {
         files: [
           {
-            uri: `${imageFilename}.png`,
+            uri: `${imagefilename}.png`,
             type: "image/png",
           },
         ],
@@ -423,8 +425,7 @@ const startCreating = async () => {
             ? console.log("Editions left to create: ", abstractedIndexes)
             : null;
           const hashedDNA = sha1(newDna);
-          const pngFilename = dnaAsJsonFilename ? hashedDNA : abstractedIndexes[0];
-          saveImage(pngFilename);
+          saveImage(abstractedIndexes[0],newDna);
           addMetadata(newDna, abstractedIndexes[0]);
           saveMetaDataSingleFile(abstractedIndexes[0]);
           console.log(
