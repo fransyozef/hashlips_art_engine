@@ -8,6 +8,7 @@ const {
   namePrefix,
   network,
   solanaMetadata,
+  useRandomFilenames,
 } = require(`${basePath}/src/config.js`);
 
 // read json data
@@ -15,6 +16,7 @@ let rawdata = fs.readFileSync(`${basePath}/build/json/_metadata.json`);
 let data = JSON.parse(rawdata);
 
 data.forEach((item) => {
+  const filename = useRandomFilenames ? item.dna : item.edition;
   if (network == NETWORK.sol) {
     item.name = `${namePrefix} #${item.edition}`;
     item.description = description;
@@ -22,7 +24,7 @@ data.forEach((item) => {
   } else {
     item.name = `${namePrefix} #${item.edition}`;
     item.description = description;
-    item.image = `${baseUri}/${item.edition}.png`;
+    item.image = `${baseUri}/${filename}.png`;
   }
   fs.writeFileSync(
     `${basePath}/build/json/${item.edition}.json`,
