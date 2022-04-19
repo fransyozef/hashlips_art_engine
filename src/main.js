@@ -22,6 +22,7 @@ const {
   solanaMetadata,
   gif,
   emptyName,
+  useRandomFilenames,
 } = require(`${basePath}/src/config.js`);
 const canvas = createCanvas(format.width, format.height);
 const ctx = canvas.getContext("2d");
@@ -115,9 +116,10 @@ const layersSetup = (layersOrder) => {
   return layers;
 };
 
-const saveImage = (_editionCount) => {
+const saveImage = (_editionCount,_dna) => {
+  const filename = useRandomFilenames ? sha1(_dna) : _editionCount;
   fs.writeFileSync(
-    `${buildDir}/images/${_editionCount}.png`,
+    `${buildDir}/images/${filename}.png`,
     canvas.toBuffer("image/png")
   );
 };
@@ -135,11 +137,13 @@ const drawBackground = () => {
 
 const addMetadata = (_dna, _edition) => {
   let dateTime = Date.now();
+  const dna = sha1(_dna);
+  const filename = useRandomFilenames ? dna : _edition;
   let tempMetadata = {
     name: `${namePrefix} #${_edition}`,
     description: description,
-    image: `${baseUri}/${_edition}.png`,
-    dna: sha1(_dna),
+    image: `${baseUri}/${filename}.png`,
+    dna,
     edition: _edition,
     date: dateTime,
     ...extraMetadata,
@@ -154,7 +158,7 @@ const addMetadata = (_dna, _edition) => {
       description: tempMetadata.description,
       //Added metadata for solana
       seller_fee_basis_points: solanaMetadata.seller_fee_basis_points,
-      image: `${_edition}.png`,
+      image: `${filename}.png`,
       //Added metadata for solana
       external_url: solanaMetadata.external_url,
       edition: _edition,
@@ -163,7 +167,7 @@ const addMetadata = (_dna, _edition) => {
       properties: {
         files: [
           {
-            uri: `${_edition}.png`,
+            uri: `${filename}.png`,
             type: "image/png",
           },
         ],
@@ -418,13 +422,15 @@ const startCreating = async () => {
           debugLogs
             ? console.log("Editions left to create: ", abstractedIndexes)
             : null;
-          saveImage(abstractedIndexes[0]);
+
+          const dna = sha1(newDna);
+          const overrideFilename = useRandomFilenames === true ? dna : null;
+
+          saveImage(abstractedIndexes[0],newDna);
           addMetadata(newDna, abstractedIndexes[0]);
           saveMetaDataSingleFile(abstractedIndexes[0]);
           console.log(
-            `Created edition: ${abstractedIndexes[0]}, with DNA: ${sha1(
-              newDna
-            )}`
+            `Created edition: ${abstractedIndexes[0]}, with DNA: ${dna}`
           );
         });
         dnaList.add(filterDNAOptions(newDna));

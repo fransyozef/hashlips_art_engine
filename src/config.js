@@ -102,6 +102,8 @@ const preview_gif = {
 
 const emptyName = 'empty';
 
+const useRandomFilenames = true;
+
 module.exports = {
   format,
   baseUri,
@@ -122,4 +124,5 @@ module.exports = {
   gif,
   preview_gif,
   emptyName,
+  useRandomFilenames,
 };
