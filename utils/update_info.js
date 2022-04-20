@@ -16,7 +16,7 @@ let rawdata = fs.readFileSync(`${basePath}/build/json/_metadata.json`);
 let data = JSON.parse(rawdata);
 
 data.forEach((item) => {
-  const filename = useRandomFilenames ? item.dna : item.edition;
+  const filename = useRandomFilenames ? `${item.edition}_${item.dna}` : item.edition;
   if (network == NETWORK.sol) {
     item.name = `${namePrefix} #${item.edition}`;
     item.description = description;

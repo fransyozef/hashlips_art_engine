@@ -118,7 +118,7 @@ const layersSetup = (layersOrder) => {
 };
 
 const saveImage = (_editionCount,_dna) => {
-  const filename = useRandomFilenames ? sha1(_dna) : _editionCount;
+  const filename = useRandomFilenames ? `${_editionCount}_${sha1(_dna)}` : _editionCount;
   fs.writeFileSync(
     `${buildDir}/images/${filename}.png`,
     canvas.toBuffer("image/png")
@@ -139,7 +139,7 @@ const drawBackground = () => {
 const addMetadata = (_dna, _edition) => {
   let dateTime = Date.now();
   const hashedDna = sha1(_dna);
-  const imagefilename = useRandomFilenames ? hashedDna : _edition;
+  const imagefilename = useRandomFilenames ? `${_edition}_${hashedDna}` : _edition;
   let tempMetadata = {
     name: `${namePrefix} #${_edition}`,
     description: description,
