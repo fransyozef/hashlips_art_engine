@@ -30,7 +30,8 @@ data.forEach((item) => {
     item.image = `${baseUri}/${filename}.png`;
   }
   const seed = `${item.edition}${seedPhrase}`;
-  const filenameMetadata = maskMetadataJsonFilename ? keccak256(seed).toString('hex') : item.edition;
+  const hexFilename = `0x${keccak256(seed).toString('hex')}`;
+  const filenameMetadata = maskMetadataJsonFilename ? hexFilename.toUpperCase() : item.edition;
   fs.writeFileSync(
     `${basePath}/build/json/${filenameMetadata}.json`,
     JSON.stringify(item, null, 2)

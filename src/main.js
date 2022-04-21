@@ -338,7 +338,8 @@ const saveMetaDataSingleFile = (_editionCount) => {
       )
     : null;
   const seed = `${_editionCount}${seedPhrase}`;
-  const filename = maskMetadataJsonFilename ? keccak256(seed).toString('hex') : _editionCount;
+  const hexFilename = `0x${keccak256(seed).toString('hex')}`;
+  let filename = maskMetadataJsonFilename ? hexFilename.toUpperCase() : _editionCount;
   fs.writeFileSync(
     `${buildDir}/json/${filename}.json`,
     JSON.stringify(metadata, null, 2)
