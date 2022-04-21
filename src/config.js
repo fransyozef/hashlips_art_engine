@@ -6,7 +6,7 @@ const network = NETWORK.eth;
 
 // Custom features not by HashLips
 const emptyName = 'empty';
-const useRandomFilenames = true;
+const useRandomFilenames = true; // this will "mask" your png filenames
 
 // General metadata for Ethereum
 const namePrefix = "Your Collection";
