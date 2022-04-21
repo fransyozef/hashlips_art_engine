@@ -7,6 +7,8 @@ const network = NETWORK.eth;
 // Custom features not by HashLips
 const emptyName = 'empty';
 const useRandomFilenames = true; // this will "mask" your png filenames
+const maskMetadataJsonFilename = false; // when true, the json metadata will be hashed
+const seedPhrase = 'CHANGE_THIS_TO_MAKE_YOUR_JSON_FILENAME_UNIQUE'; // will only be used when maskMetadataJsonFilename = true
 
 // General metadata for Ethereum
 const namePrefix = "Your Collection";
@@ -125,4 +127,6 @@ module.exports = {
   preview_gif,
   emptyName,
   useRandomFilenames,
+  maskMetadataJsonFilename,
+  seedPhrase
 };

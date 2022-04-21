@@ -1,6 +1,7 @@
 const basePath = process.cwd();
 const { NETWORK } = require(`${basePath}/constants/network.js`);
 const fs = require("fs");
+const keccak256 = require('keccak256');
 
 const {
   baseUri,
@@ -9,6 +10,8 @@ const {
   network,
   solanaMetadata,
   useRandomFilenames,
+  maskMetadataJsonFilename,
+  seedPhrase,
 } = require(`${basePath}/src/config.js`);
 
 // read json data
@@ -26,8 +29,10 @@ data.forEach((item) => {
     item.description = description;
     item.image = `${baseUri}/${filename}.png`;
   }
+  const seed = `${item.edition}${seedPhrase}`;
+  const filenameMetadata = maskMetadataJsonFilename ? keccak256(seed).toString('hex') : item.edition;
   fs.writeFileSync(
-    `${basePath}/build/json/${item.edition}.json`,
+    `${basePath}/build/json/${filenameMetadata}.json`,
     JSON.stringify(item, null, 2)
   );
 });
