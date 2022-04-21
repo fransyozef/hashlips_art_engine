@@ -22,7 +22,6 @@ const {
   solanaMetadata,
   gif,
   emptyName,
-  dnaAsJsonFilename,
   useRandomFilenames,
 } = require(`${basePath}/src/config.js`);
 const canvas = createCanvas(format.width, format.height);
@@ -330,7 +329,6 @@ const writeMetaData = (_data) => {
 
 const saveMetaDataSingleFile = (_editionCount) => {
   let metadata = metadataList.find((meta) => meta.edition == _editionCount);
-  _editionCount = dnaAsJsonFilename ? metadata.dna : _editionCount;
   debugLogs
     ? console.log(
         `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`

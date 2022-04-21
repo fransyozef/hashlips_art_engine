@@ -4,6 +4,10 @@ const { NETWORK } = require(`${basePath}/constants/network.js`);
 
 const network = NETWORK.eth;
 
+// Custom features not by HashLips
+const emptyName = 'empty';
+const useRandomFilenames = true;
+
 // General metadata for Ethereum
 const namePrefix = "Your Collection";
 const description = "Remember to replace this description";
@@ -100,10 +104,6 @@ const preview_gif = {
   imageName: "preview.gif",
 };
 
-const emptyName = 'empty';
-const dnaAsJsonFilename = false;
-const useRandomFilenames = true;
-
 module.exports = {
   format,
   baseUri,
@@ -124,6 +124,5 @@ module.exports = {
   gif,
   preview_gif,
   emptyName,
-  dnaAsJsonFilename,
   useRandomFilenames,
 };
