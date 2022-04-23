@@ -25,6 +25,7 @@ const {
   useRandomFilenames,
   maskMetadataJsonFilename,
   seedPhrase,
+  offsetIndex,
 } = require(`${basePath}/src/config.js`);
 const canvas = createCanvas(format.width, format.height);
 const ctx = canvas.getContext("2d");
@@ -120,6 +121,7 @@ const layersSetup = (layersOrder) => {
 };
 
 const saveImage = (_editionCount,_dna) => {
+  _editionCount = _editionCount + offsetIndex;
   const filename = useRandomFilenames ? `${_editionCount}_${sha1(_dna)}` : _editionCount;
   fs.writeFileSync(
     `${buildDir}/images/${filename}.png`,
@@ -139,9 +141,10 @@ const drawBackground = () => {
 };
 
 const addMetadata = (_dna, _edition) => {
+  _edition = _edition + offsetIndex;
   let dateTime = Date.now();
   const hashedDna = sha1(_dna);
-  const imagefilename = useRandomFilenames ? `${_edition}_${hashedDna}` : _edition;
+  const imagefilename = useRandomFilenames ? `${_edition}_${hashedDna}` : `${_edition}`;
   let tempMetadata = {
     name: `${namePrefix} #${_edition}`,
     description: description,
@@ -151,7 +154,7 @@ const addMetadata = (_dna, _edition) => {
     date: dateTime,
     ...extraMetadata,
     attributes: attributesList,
-    compiler: "HashLips Art Engine",
+    compiler: "HashLips Art Engine , forked by fransyozef",
   };
   if (network == NETWORK.sol) {
     tempMetadata = {
@@ -331,6 +334,7 @@ const writeMetaData = (_data) => {
 };
 
 const saveMetaDataSingleFile = (_editionCount) => {
+  _editionCount = _editionCount + offsetIndex;
   let metadata = metadataList.find((meta) => meta.edition == _editionCount);
   debugLogs
     ? console.log(
@@ -339,7 +343,7 @@ const saveMetaDataSingleFile = (_editionCount) => {
     : null;
   const seed = `${_editionCount}${seedPhrase}`;
   const hexFilename = keccak256(seed).toString('hex');
-  let filename = maskMetadataJsonFilename ? `${_editionCount}_0x${hexFilename.toUpperCase()}` : _editionCount;
+  const filename = maskMetadataJsonFilename ? `${_editionCount}_0x${hexFilename.toUpperCase()}` : `${_editionCount}`;
   fs.writeFileSync(
     `${buildDir}/json/${filename}.json`,
     JSON.stringify(metadata, null, 2)
