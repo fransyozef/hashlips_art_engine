@@ -31,7 +31,7 @@ data.forEach((item) => {
   }
   const seed = `${item.edition}${seedPhrase}`;
   const hexFilename = keccak256(seed).toString('hex');
-  const filenameMetadata = maskMetadataJsonFilename ? `0x${hexFilename.toUpperCase()}` : item.edition;
+  const filenameMetadata = maskMetadataJsonFilename ? `${item.edition}_0x${hexFilename.toUpperCase()}` : item.edition;
   fs.writeFileSync(
     `${basePath}/build/json/${filenameMetadata}.json`,
     JSON.stringify(item, null, 2)
