@@ -1,6 +1,7 @@
 const basePath = process.cwd();
 const { MODE } = require(`${basePath}/constants/blend_mode.js`);
 const { NETWORK } = require(`${basePath}/constants/network.js`);
+const { ENGINE } = require(`${basePath}/constants/engine.js`);
 
 const network = NETWORK.eth;
 
@@ -10,6 +11,7 @@ const useRandomFilenames = false; // this will "mask" your png filenames
 const maskMetadataJsonFilename = false; // when true, the json metadata will be hashed
 const seedPhrase = 'CHANGE_THIS_TO_MAKE_YOUR_JSON_FILENAME_UNIQUE'; // will only be used when maskMetadataJsonFilename = true
 const offsetIndex = 0; // change the counter of your filenames. Remember, it counts from 0. So when you set to 10, the export filenames will start at 11
+const engineType = ENGINE.image; // images or mp4?
 
 // General metadata for Ethereum
 const namePrefix = "Your Collection";
@@ -131,4 +133,5 @@ module.exports = {
   maskMetadataJsonFilename,
   seedPhrase,
   offsetIndex,
+  engineType
 };

@@ -26,7 +26,10 @@ const {
   maskMetadataJsonFilename,
   seedPhrase,
   offsetIndex,
+  engineType,
 } = require(`${basePath}/src/config.js`);
+const { ENGINE } = require(`${basePath}/constants/engine.js`);
+
 const canvas = createCanvas(format.width, format.height);
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = format.smoothing;
