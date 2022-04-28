@@ -111,7 +111,7 @@ const layerConfigurations = [
   },
 ];
 ```
-
+### Remove layer as attribute
 If you need to remove layer as attribute, you can use the `skipAttribute` option. For example
 
 ```js
@@ -130,20 +130,77 @@ const layerConfigurations = [
 ```
 The layer `Head` will not be included as attribute in the json file.
 
+### Offset numbering of the files
+At default, the numbering of the files will begin at 1 up to the `growEditionSizeTo` you have set.
+In some cases, you want to start at a different offset.
+You can use the `offsetIndex` for that. DEfault is set to 0.
+Note! When the generation starts at 0, so if you put in 10, the numbering will start at 11
+
+### Hashed png filenames
+At default, the png output file start with a number up to the growEditionSizeTo` you have set. So for example 1.png, 2.png etc etc.
+
+This structure makes it easy target for snipers/webcrawlers to download all you files you have uploaded to a server (pinata/ipfs or your own server). To make it a little bit harder, there is the `useRandomFilenames` option. When you set this to `true` , then the filename will be same as the DN. For example sd3lkjdfg93.png
+
+### Empty filename
+If you have a png file name `empty.png', then this will not be included in the attributes. So this will prevent something like this
+
+
+```
+  "attributes": [
+    {
+      "trait_type": "Eyeball",
+      "value": "empty"
+    },
+```
+In this case the whole `Eyeball` trait will then not be generated
+
+### Output Format
+Set your output format
+
+```
+const format = {
+  width: 512,
+  height: 512,
+  smoothing: false,
+};
+```
+
 
 Update your `format` size, ie the outputted image size, and the `growEditionSizeTo` on each `layerConfigurations` object, which is the amount of variation outputted.
 
-You can mix up the `layerConfigurations` order on how the images are saved by setting the variable `shuffleLayerConfigurations` in the `config.js` file to true. It is false by default and will save all images in numerical order.
+### Ignore layer as DNA uniqueness
+If you want to have a layer _ignored_ in the DNA uniqueness check, you can set `bypassDNA: true` in the `options` object. This has the effect of making sure the rest of the traits are unique while not considering the `Background` Layers as traits, for example. The layers _are_ included in the final image.
 
+### Use different attribute name
+To use a different metadata attribute name you can add the `displayName: "Awesome Eye Color"` to the `options` object. All options are optional and can be addes on the same layer if you want to. For example
+
+```
+const layerConfigurations = [
+  {
+    layersOrder: [
+      { name: "Eyeball", options: { displayName: "My eye" } },
+    ],
+  },
+];
+```
+This will generate the attribute as
+```
+  "attributes": [
+    {
+      "trait_type": "My eye",
+      "value": ""
+    },
+```
+
+### Debug logs
 If you want to have logs to debug and see what is happening when you generate images you can set the variable `debugLogs` in the `config.js` file to true. It is false by default, so you will only see general logs.
+
+### Mix configuration
+You can mix up the `layerConfigurations` order on how the images are saved by setting the variable `shuffleLayerConfigurations` in the `config.js` file to true. It is false by default and will save all images in numerical order.
 
 If you want to play around with different blending modes, you can add a `blend: MODE.colorBurn` field to the layersOrder `options` object.
 
 If you need a layers to have a different opacity then you can add the `opacity: 0.7` field to the layersOrder `options` object as well.
-
-If you want to have a layer _ignored_ in the DNA uniqueness check, you can set `bypassDNA: true` in the `options` object. This has the effect of making sure the rest of the traits are unique while not considering the `Background` Layers as traits, for example. The layers _are_ included in the final image.
-
-To use a different metadata attribute name you can add the `displayName: "Awesome Eye Color"` to the `options` object. All options are optional and can be addes on the same layer if you want to.
 
 Here is an example on how you can play around with both filter fields:
 
@@ -175,6 +232,7 @@ const layerConfigurations = [
 ];
 ```
 
+### Blending modes
 Here is a list of the different blending modes that you can optionally use.
 
 ```js
@@ -208,6 +266,7 @@ const MODE = {
 };
 ```
 
+### Build
 When you are ready, run the following command and your outputted art will be in the `build/images` directory and the json in the `build/json` directory:
 
 ```sh
@@ -243,6 +302,7 @@ The program will output all the images in the `build/images` directory along wit
 }
 ```
 
+### Extra metadata
 You can also add extra metadata to each metadata file by adding your extra items, (key: value) pairs to the `extraMetadata` object variable in the `config.js` file.
 
 ```js
