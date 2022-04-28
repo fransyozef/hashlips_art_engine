@@ -6,10 +6,10 @@ const network = NETWORK.eth;
 
 // Custom features not by HashLips
 const emptyName = 'empty';
-const useRandomFilenames = false; // this will "mask" your png filenames
-const maskMetadataJsonFilename = false; // when true, the json metadata will be hashed
+const useRandomFilenames = true; // this will "mask" your png filenames
+const maskMetadataJsonFilename = true; // when true, the json metadata will be hashed
 const seedPhrase = 'CHANGE_THIS_TO_MAKE_YOUR_JSON_FILENAME_UNIQUE'; // will only be used when maskMetadataJsonFilename = true
-const offsetIndex = 0; // change the counter of your filenames. Remember, it counts from 0. So when you set to 10, the export filenames will start at 11
+const offsetIndex = 0; // change the start counter of your filenames
 
 // General metadata for Ethereum
 const namePrefix = "Your Collection";

@@ -121,7 +121,7 @@ const layersSetup = (layersOrder) => {
 };
 
 const saveImage = (_editionCount,_dna) => {
-  _editionCount = _editionCount + offsetIndex;
+  _editionCount = _editionCount + (offsetIndex > 0 ? offsetIndex -1 : offsetIndex);
   const filename = useRandomFilenames ? `${_editionCount}_${sha1(_dna)}` : _editionCount;
   fs.writeFileSync(
     `${buildDir}/images/${filename}.png`,
@@ -141,7 +141,7 @@ const drawBackground = () => {
 };
 
 const addMetadata = (_dna, _edition) => {
-  _edition = _edition + offsetIndex;
+  _edition = _edition + (offsetIndex > 0 ? offsetIndex -1 : offsetIndex);
   let dateTime = Date.now();
   const hashedDna = sha1(_dna);
   const imagefilename = useRandomFilenames ? `${_edition}_${hashedDna}` : `${_edition}`;
@@ -334,7 +334,7 @@ const writeMetaData = (_data) => {
 };
 
 const saveMetaDataSingleFile = (_editionCount) => {
-  _editionCount = _editionCount + offsetIndex;
+  _editionCount = _editionCount + (offsetIndex > 0 ? offsetIndex -1 : offsetIndex);
   let metadata = metadataList.find((meta) => meta.edition == _editionCount);
   debugLogs
     ? console.log(
@@ -436,8 +436,9 @@ const startCreating = async () => {
           saveImage(abstractedIndexes[0],newDna);
           addMetadata(newDna, abstractedIndexes[0]);
           saveMetaDataSingleFile(abstractedIndexes[0]);
+          const editionCounter = abstractedIndexes[0] + (offsetIndex > 0 ? offsetIndex -1 : offsetIndex);
           console.log(
-            `Created edition: ${abstractedIndexes[0]}, with DNA: ${hashedDNA}`
+            `Created edition: ${editionCounter}, with DNA: ${hashedDNA}`
           );
         });
         dnaList.add(filterDNAOptions(newDna));
