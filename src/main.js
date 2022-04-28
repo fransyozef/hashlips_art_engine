@@ -3,8 +3,8 @@ const { NETWORK } = require(`${basePath}/constants/network.js`);
 const fs = require("fs");
 const sha1 = require(`${basePath}/node_modules/sha1`);
 const { createCanvas, loadImage } = require(`${basePath}/node_modules/canvas`);
-const buildDir = `${basePath}/build`;
-const layersDir = `${basePath}/layers`;
+const HashlipsGiffer = require(`${basePath}/modules/HashlipsGiffer.js`);
+const keccak256 = require('keccak256');
 const {
   format,
   baseUri,
@@ -27,17 +27,18 @@ const {
   seedPhrase,
   offsetIndex,
 } = require(`${basePath}/src/config.js`);
-const canvas = createCanvas(format.width, format.height);
-const ctx = canvas.getContext("2d");
-ctx.imageSmoothingEnabled = format.smoothing;
+const buildDir = `${basePath}/build`;
+const layersDir = `${basePath}/layers`;
+
 var metadataList = [];
 var attributesList = [];
 var dnaList = new Set();
 const DNA_DELIMITER = "-";
-const HashlipsGiffer = require(`${basePath}/modules/HashlipsGiffer.js`);
-const keccak256 = require('keccak256');
-
 let hashlipsGiffer = null;
+
+const canvas = createCanvas(format.width, format.height);
+const ctx = canvas.getContext("2d");
+ctx.imageSmoothingEnabled = format.smoothing;
 
 const buildSetup = () => {
   if (fs.existsSync(buildDir)) {

@@ -1,7 +1,7 @@
 const basePath = process.cwd();
-const { NETWORK } = require(`${basePath}/constants/network.js`);
 const fs = require("fs");
 const keccak256 = require('keccak256');
+const { NETWORK } = require(`${basePath}/constants/network.js`);
 
 const {
   baseUri,
@@ -20,13 +20,11 @@ let data = JSON.parse(rawdata);
 
 data.forEach((item) => {
   const filename = useRandomFilenames ? `${item.edition}_${item.dna}` : item.edition;
+  item.name = `${namePrefix} #${item.edition}`;
+  item.description = description;
   if (network == NETWORK.sol) {
-    item.name = `${namePrefix} #${item.edition}`;
-    item.description = description;
     item.creators = solanaMetadata.creators;
   } else {
-    item.name = `${namePrefix} #${item.edition}`;
-    item.description = description;
     item.image = `${baseUri}/${filename}.png`;
   }
   const seed = `${item.edition}${seedPhrase}`;
