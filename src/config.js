@@ -6,8 +6,8 @@ const network = NETWORK.eth;
 
 // Custom features not by HashLips
 const emptyName = 'empty';
-const useRandomFilenames = true; // this will "mask" your png filenames
-const maskMetadataJsonFilename = true; // when true, the json metadata will be hashed
+const useRandomFilenames = false; // this will "mask" your png filenames
+const maskMetadataJsonFilename = false; // when true, the json metadata will be hashed
 const seedPhrase = 'CHANGE_THIS_TO_MAKE_YOUR_JSON_FILENAME_UNIQUE'; // will only be used when maskMetadataJsonFilename = true
 const offsetIndex = 0; // change the start counter of your filenames
 
