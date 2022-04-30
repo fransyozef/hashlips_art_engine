@@ -29,7 +29,7 @@ Then install the required packages:
 npm install
 ```
 
-## Setting up your you layers folder structure
+## Setting up your layers folder structure
 
 There is a folder `/layers/`. In that folder you can put your layers, but adding subfolders. 
 So for example, if you have a layer called `Backgrounds` , then create the folder `/layers/Backgrounds/`. 
