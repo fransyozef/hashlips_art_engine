@@ -1,6 +1,8 @@
 # Support
 
-NOTE!!! This is a FORKED version of the HashLip Art Generation. The original one is at https://github.com/HashLips/hashlips_art_engine
+NOTE!!! This is a FORKED version of the HashLip Art Generation. The original one is at https://github.com/HashLips/hashlips_art_engine.
+
+As reference I used HashLips Youtube Video : https://www.youtube.com/watch?v=Zhmj4PiJ-GA
 
 Like this fork of the HashLip Art Generation? Want to support me? Please donate some crypto to me (so I can support my 4 wives and 11 kids and 3 dogs) 
 
@@ -9,35 +11,11 @@ Like this fork of the HashLip Art Generation? Want to support me? Please donate 
 ** Polygon : 0x70a0D3c75853f706B17970727A25113a63bCAf1f
 
 
-# Welcome to HashLips 👄
-
-![](https://github.com/HashLips/hashlips_art_engine/blob/main/logo.png)
-
-All the code in these repos was created and explained by HashLips on the main YouTube channel.
-
-To find out more please visit:
-
-[📺 YouTube](https://www.youtube.com/channel/UC1LV4_VQGBJHTJjEWUmy8nA)
-
-[👄 Discord](https://discord.com/invite/qh6MWhMJDN)
-
-[💬 Telegram](https://t.me/hashlipsnft)
-
-[🐦 Twitter](https://twitter.com/hashlipsnft)
-
-[ℹ️ Website](https://hashlips.online/HashLips)
-
-# HashLips Art Engine 🔥
-
-![](https://github.com/HashLips/hashlips_art_engine/blob/main/banner.png)
-
-Create generative art by using the canvas api and node js. 
-
 ## NodeJS
-You need NodeJS to run the generator and it's tools. Recommend version is NodeJS 14. 
+You need NodeJS to run the generator and it's tools. Recommended version is NodeJS 14. 
 Download it at https://nodejs.org/en/download/
 
-## Installation 🛠️
+## Installation
 
 If you are cloning the project then run this first, otherwise you can download the source code on the release page and skip this step.
 
@@ -45,77 +23,213 @@ If you are cloning the project then run this first, otherwise you can download t
 git clone https://github.com/HashLips/hashlips_art_engine.git
 ```
 
-Go to the root of your folder and run this command if you have yarn installed.
-
-```sh
-yarn install
-```
-
-Alternatively you can run this command if you have node installed.
+Then install the required packages: 
 
 ```sh
 npm install
 ```
 
-## Usage ℹ️
+## Setting up your you layers folder structure
 
-Create your different layers as folders in the 'layers' directory, and add all the layer assets in these directories. You can name the assets anything as long as it has a rarity weight attached in the file name like so: `example element#70.png`. You can optionally change the delimiter `#` to anything you would like to use in the variable `rarityDelimiter` in the `src/config.js` file.
+There is a folder `/layers/`. In that folder you can put your layers, but adding subfolders. 
+So for example, if you have a layer called `Backgrounds` , then create the folder `/layers/Backgrounds/`. 
+You then put your png files in that folder.
 
-Once you have all your layers, go into `src/config.js` and update the `layerConfigurations` objects `layersOrder` array to be your layer folders name in order of the back layer to the front layer.
 
-_Example:_ If you were creating a portrait design, you might have a background, then a head, a mouth, eyes, eyewear, and then headwear, so your `layersOrder` would look something like this:
+## The Config file
 
-```js
+Now that you have setup your layers folder strucute, you can use it in the application.
+You need to define each layer in the `/src/config.js` file in the `layerConfigurations` section :
+
+```
 const layerConfigurations = [
   {
-    growEditionSizeTo: 100,
+    growEditionSizeTo: 5,
     layersOrder: [
-      { name: "Head" },
-      { name: "Mouth" },
-      { name: "Eyes" },
-      { name: "Eyeswear" },
-      { name: "Headwear" },
+      { name: "Backgrounds" },
+    ],
+  },
+];
+```
+Notice that the `name` value is the same as your folder name in `/layers/`. The application will take the name and will look for your images in the folder with the EXACT name.
+
+So if you have 
+
+```
+const layerConfigurations = [
+  {
+    growEditionSizeTo: 5,
+    layersOrder: [
+      { name: "My Backgrounds" },
+    ],
+  },
+];
+```
+But your folder name is called `/layers/Backgrounds` , then the application will crash!!!
+
+
+## Stacking your layers
+
+The application will take your png files and stack them on eachother to create 1 png file.
+
+You need to define the layers order in the `config.js` file. For example :
+
+```
+const layerConfigurations = [
+  {
+    growEditionSizeTo: 5,
+    layersOrder: [
+      { name: "Background"},
+      { name: "Eyeball" },
+      { name: "Eye color" },
+      { name: "Iris" },
+      { name: "Shine" },
+      { name: "Bottom lid" },
+      { name: "Top lid" },
     ],
   },
 ];
 ```
 
-The `name` of each layer object represents the name of the folder (in `/layers/`) that the images reside in.
+So the `layersOrder` will define the layers and the order that the layers are stacked on.
+Keep in mind, you define the layer "reversed". So in this example , the layer `Background` is the bottom layer (although you define it as first), and everything will be stack on top of it and the layer `Top lid` would be then the last to be add on top of the stack.
 
-Optionally you can now add multiple different `layerConfigurations` to your collection. Each configuration can be unique and have different layer orders, use the same layers or introduce new ones. This gives the artist flexibility when it comes to fine tuning their collections to their needs.
 
-_Example:_ If you were creating a portrait design, you might have a background, then a head, a mouth, eyes, eyewear, and then headwear and you want to create a new race or just simple re-order the layers or even introduce new layers, then you're `layerConfigurations` and `layersOrder` would look something like this:
+## Ammount of exported files
 
-```js
+You define the ammount of exported files also  in the `layerConfigurations`. Use the `growEditionSizeTo` for this.
+
+
+## Generate your files
+
+You are set with the minimum configuration to generate your collection. 
+Just run the command
+
+```sh
+npm start
+```
+
+Your collection will be exported in the folder `/build/`. The images will be exported in `/build/images/` and the metadata will be generated in `/build/json/`
+
+
+## Update the actual png file location
+
+In the HashLips Masterclass video, you will see that the images are uploaded to IPFS. This will create a unique CID link.
+You need to update your json files with the new CID link. 
+
+Goto your `config.js` file and find `const baseUri = "ipfs://NewUriToReplace";`. Change the NewUriReplace with the new CID link, for example
+
+```
+const baseUri = "ipfs://Ame3Kd9Az";`
+```
+
+You could also upload the images to your own hosting server and use your domainname, for example
+
+```
+const baseUri = "https://mydomain.com";`
+```
+
+Now run the the command
+
+
+```sh
+npm run update_info
+```
+
+You will see that the json files will be updated with the new `baseUri`.
+
+Now you can upload your metadata to IPFS.
+
+
+## Setting up rarity
+
+You can setup a rarity per layer to define which image is rare in that layer. 
+Lets say you have a folder structure `/layers/Background/` and in that folder you have 2 images :
+
+```
+- background1.png
+- background2.png
+```
+
+At this moment, the generator will take one of these 2 png's as input, because they are on the same weight.
+To make a rare background, you need to rename the files with a `#` in it and a number. For example
+
+```
+- background1#50.png
+- background2#1.png
+```
+
+The lower the number, the more rare. So in this example, `background1` would be picked more by the generator than `background2`.
+
+
+# Extra options
+
+Here are some extra options you can use to finetune your collection.
+
+## Use different attribute name
+
+At default, the generator will take the `name` attribute value as `trait_type` value.
+
+For example
+
+```
 const layerConfigurations = [
   {
-    // Creates up to 50 artworks
-    growEditionSizeTo: 50,
+    growEditionSizeTo: 5,
     layersOrder: [
-      { name: "Background" },
-      { name: "Head" },
-      { name: "Mouth" },
-      { name: "Eyes" },
-      { name: "Eyeswear" },
-      { name: "Headwear" },
-    ],
-  },
-  {
-    // Creates an additional 100 artworks
-    growEditionSizeTo: 150,
-    layersOrder: [
-      { name: "Background" },
-      { name: "Head" },
-      { name: "Eyes" },
-      { name: "Mouth" },
-      { name: "Eyeswear" },
-      { name: "Headwear" },
-      { name: "AlienHeadwear" },
+      { name: "Background"},
     ],
   },
 ];
 ```
-### Remove layer as attribute
+will generate an attribute like
+
+```
+    {
+      "trait_type": "Background",
+      "value": "Some value"
+    },
+```
+
+But you can use a different display name, for example :
+
+```
+const layerConfigurations = [
+  {
+    growEditionSizeTo: 5,
+    layersOrder: [
+      { name: "Background" , options: { displayName: 'My Background" } },
+    ],
+  },
+];
+```
+
+will produce the attribute
+
+```
+    {
+      "trait_type": "My Background",
+      "value": "Some value"
+    },
+```
+
+## Ignore layer as DNA uniqueness
+
+The generator will create a DNA based on your layers and rarity etc. This DNA should be unique in your collection.
+There could be reason you don't want a certain layer to be included in the DNA generation, because that layer is maybe not that import to be unique. For example
+
+```
+const layerConfigurations = [
+  {
+    growEditionSizeTo: 5,
+    layersOrder: [
+      { name: "Background" , options: { bypassDNA: true } },
+    ],
+  },
+];
+```
+
+## Remove layer as attribute
 If you need to remove layer as attribute, you can use the `skipAttribute` option. For example
 
 ```js
@@ -124,28 +238,24 @@ const layerConfigurations = [
     growEditionSizeTo: 100,
     layersOrder: [
       { name: "Head" , options : { skipAttribute : true } },
-      { name: "Mouth" },
-      { name: "Eyes" },
-      { name: "Eyeswear" },
-      { name: "Headwear" },
     ],
   },
 ];
 ```
 The layer `Head` will not be included as attribute in the json file.
 
-### Offset numbering of the files
+## Offset numbering of the files
 At default, the numbering of the files will begin at 1 up to the `growEditionSizeTo` you have set.
 In some cases, you want to start at a different offset.
-You can use the `offsetIndex` for that. DEfault is set to 0.
-Note! When the generation starts at 0, so if you put in 10, the numbering will start at 11
+You can use the `offsetIndex` for that in the `config.js` file. Default is set to 0.
+Note! When the generation starts at 0, so if you put in 10, the numbering will start at 11.
 
-### Hashed png filenames
+## Hashed png filenames
 At default, the png output file start with a number up to the `growEditionSizeTo` you have set. So for example 1.png, 2.png etc etc.
 
-This structure makes it easy target for snipers/webcrawlers to download all you files you have uploaded to a server (pinata/ipfs or your own server). To make it a little bit harder, there is the `useRandomFilenames` option. When you set this to `true` , then the filename will be same as the DN. For example sd3lkjdfg93.png
+This structure makes it easy target for snipers/webcrawlers to download all you files you have uploaded to a server (pinata/ipfs or your own server). To make it a little bit harder, there is the `useRandomFilenames` option in the `config.js` file. When you set this to `true` , then the filename will be same as the DN. For example sd3lkjdfg93.png
 
-### Hashed metadata json
+## Hashed metadata json
 
 With `useRandomFilenames` you can hash your png filenames. You can also do this with the metadata json.
 
@@ -159,7 +269,7 @@ It comes with 3 parts
 Your metadata file will look something like this : `1_0x3B3D7CA6F14898CDAC93A5ABDB3680CBAD7192676AF76001EDD3BA65481003C3.json`. Make sure on the contract side, that the metadata url has the same json filename. 
 
 
-### Empty filename
+## Empty filename
 If you have a png file name `empty.png', then this will not be included in the attributes. So this will prevent something like this
 
 
@@ -172,7 +282,8 @@ If you have a png file name `empty.png', then this will not be included in the a
 ```
 In this case the whole `Eyeball` trait will then not be generated
 
-### Output Format
+
+## Output Format
 Set your output format
 
 ```
@@ -183,32 +294,8 @@ const format = {
 };
 ```
 
-
 Update your `format` size, ie the outputted image size, and the `growEditionSizeTo` on each `layerConfigurations` object, which is the amount of variation outputted.
 
-### Ignore layer as DNA uniqueness
-If you want to have a layer _ignored_ in the DNA uniqueness check, you can set `bypassDNA: true` in the `options` object. This has the effect of making sure the rest of the traits are unique while not considering the `Background` Layers as traits, for example. The layers _are_ included in the final image.
-
-### Use different attribute name
-To use a different metadata attribute name you can add the `displayName: "Awesome Eye Color"` to the `options` object. All options are optional and can be addes on the same layer if you want to. For example
-
-```
-const layerConfigurations = [
-  {
-    layersOrder: [
-      { name: "Eyeball", options: { displayName: "My eye" } },
-    ],
-  },
-];
-```
-This will generate the attribute as
-```
-  "attributes": [
-    {
-      "trait_type": "My eye",
-      "value": ""
-    },
-```
 
 ### Debug logs
 If you want to have logs to debug and see what is happening when you generate images you can set the variable `debugLogs` in the `config.js` file to true. It is false by default, so you will only see general logs.
@@ -284,48 +371,13 @@ const MODE = {
 };
 ```
 
-### Build
-When you are ready, run the following command and your outputted art will be in the `build/images` directory and the json in the `build/json` directory:
 
-```sh
-npm run build
-```
-
-or
-
-```sh
-node index.js
-```
-
-The program will output all the images in the `build/images` directory along with the metadata files in the `build/json` directory. Each collection will have a `_metadata.json` file that consists of all the metadata in the collection inside the `build/json` directory. The `build/json` folder also will contain all the single json files that represent each image file. The single json file of a image will look something like this:
-
-```json
-{
-  "dna": "d956cdf4e460508b5ff90c21974124f68d6edc34",
-  "name": "#1",
-  "description": "This is the description of your NFT project",
-  "image": "https://hashlips/nft/1.png",
-  "edition": 1,
-  "date": 1731990799975,
-  "attributes": [
-    { "trait_type": "Background", "value": "Black" },
-    { "trait_type": "Eyeball", "value": "Red" },
-    { "trait_type": "Eye color", "value": "Yellow" },
-    { "trait_type": "Iris", "value": "Small" },
-    { "trait_type": "Shine", "value": "Shapes" },
-    { "trait_type": "Bottom lid", "value": "Low" },
-    { "trait_type": "Top lid", "value": "Middle" }
-  ],
-  "compiler": "HashLips Art Engine"
-}
-```
-
-### Extra metadata
+## Extra metadata
 You can also add extra metadata to each metadata file by adding your extra items, (key: value) pairs to the `extraMetadata` object variable in the `config.js` file.
 
 ```js
 const extraMetadata = {
-  creator: "Daniel Eugene Botha",
+  creator: "Fransjo Leihitu",
 };
 ```
 
@@ -389,37 +441,9 @@ const gif = {
 };
 ```
 
-### Printing rarity data (Experimental feature)
-
-To see the percentages of each attribute across your collection, run:
-
-```sh
-npm run rarity
-```
-
-The output will look something like this:
-
-```sh
-Trait type: Top lid
-{
-  trait: 'High',
-  chance: '30',
-  occurrence: '3 in 20 editions (15.00 %)'
-}
-{
-  trait: 'Low',
-  chance: '20',
-  occurrence: '3 in 20 editions (15.00 %)'
-}
-{
-  trait: 'Middle',
-  chance: '50',
-  occurrence: '14 in 20 editions (70.00 %)'
-}
-```
 
 ### Hidden image and json template
 
 In the folder `_hidden` you will find the template for the hidden image and json. You can use this for the prereveal of your collection
 
-Hope you create some awesome artworks with this code 👄
+Hope you create some awesome artworks with this code
