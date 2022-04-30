@@ -1,8 +1,11 @@
-# Support
+# Welcome!
 
 NOTE!!! This is a FORKED version of the HashLip Art Generation. The original one is at https://github.com/HashLips/hashlips_art_engine.
 
 As reference I used HashLips Youtube Video : https://www.youtube.com/watch?v=Zhmj4PiJ-GA
+
+
+# Support
 
 Like this fork of the HashLip Art Generation? Want to support me? Please donate some crypto to me (so I can support my 4 wives and 11 kids and 3 dogs) 
 
@@ -10,6 +13,8 @@ Like this fork of the HashLip Art Generation? Want to support me? Please donate 
 
 ** Polygon : 0x70a0D3c75853f706B17970727A25113a63bCAf1f
 
+
+# Let's start
 
 ## NodeJS
 You need NodeJS to run the generator and it's tools. Recommended version is NodeJS 14. 
