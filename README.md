@@ -46,7 +46,7 @@ You then put your png files in that folder.
 Now that you have setup your layers folder strucute, you can use it in the application.
 You need to define each layer in the `/src/config.js` file in the `layerConfigurations` section :
 
-```
+```js
 const layerConfigurations = [
   {
     growEditionSizeTo: 5,
@@ -60,7 +60,7 @@ Notice that the `name` value is the same as your folder name in `/layers/`. The 
 
 So if you have 
 
-```
+```js
 const layerConfigurations = [
   {
     growEditionSizeTo: 5,
@@ -79,7 +79,7 @@ The application will take your png files and stack them on eachother to create 1
 
 You need to define the layers order in the `config.js` file. For example :
 
-```
+```js
 const layerConfigurations = [
   {
     growEditionSizeTo: 5,
@@ -124,13 +124,13 @@ You need to update your json files with the new CID link.
 
 Goto your `config.js` file and find `const baseUri = "ipfs://NewUriToReplace";`. Change the NewUriReplace with the new CID link, for example
 
-```
+```js
 const baseUri = "ipfs://Ame3Kd9Az";`
 ```
 
 You could also upload the images to your own hosting server and use your domainname, for example
 
-```
+```js
 const baseUri = "https://mydomain.com";`
 ```
 
@@ -177,7 +177,7 @@ At default, the generator will take the `name` attribute value as `trait_type` v
 
 For example
 
-```
+```js
 const layerConfigurations = [
   {
     growEditionSizeTo: 5,
@@ -198,7 +198,7 @@ will generate an attribute like
 
 But you can use a different display name, for example :
 
-```
+```js
 const layerConfigurations = [
   {
     growEditionSizeTo: 5,
@@ -223,7 +223,7 @@ will produce the attribute
 The generator will create a DNA based on your layers and rarity etc. This DNA should be unique in your collection.
 There could be reason you don't want a certain layer to be included in the DNA generation, because that layer is maybe not that import to be unique. For example
 
-```
+```js
 const layerConfigurations = [
   {
     growEditionSizeTo: 5,
@@ -295,13 +295,13 @@ In the `config.js` set the const `addTextCounter` to true.
 
 for example :
 
-```
+```js
 const addTextCounter = true;
 ```
 
 Now you can configure the text with the `textCounterConfig` object :
 
-```
+```js
 const textCounterConfig = {
   x: 0,
   y: 0,
@@ -319,7 +319,7 @@ const textCounterConfig = {
 ## Output Format
 Set your output format
 
-```
+```js
 const format = {
   width: 512,
   height: 512,
