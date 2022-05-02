@@ -287,6 +287,34 @@ If you have a png file name `empty.png', then this will not be included in the a
 ```
 In this case the whole `Eyeball` trait will then not be generated
 
+## Add a text counter
+
+You can add a textcounter on top of your exported images.
+
+In the `config.js` set the const `addTextCounter` to true.
+
+for example :
+
+```
+const addTextCounter = true;
+```
+
+Now you can configure the text with the `textCounterConfig` object :
+
+```
+const textCounterConfig = {
+  x: 0,
+  y: 0,
+  fontSize : 20,
+  template: 'I am number #[edition]',
+  color: "#ffffff",
+  align: "left",
+  baseline: "top",
+  weight: "regular",
+  family: "Courier",
+}
+```
+
 
 ## Output Format
 Set your output format

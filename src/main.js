@@ -26,6 +26,8 @@ const {
   maskMetadataJsonFilename,
   seedPhrase,
   offsetIndex,
+  addTextCounter,
+  textCounterConfig,
 } = require(`${basePath}/src/config.js`);
 const buildDir = `${basePath}/build`;
 const layersDir = `${basePath}/layers`;
@@ -124,6 +126,24 @@ const layersSetup = (layersOrder) => {
 const saveImage = (_editionCount,_dna) => {
   _editionCount = _editionCount + (offsetIndex > 0 ? offsetIndex -1 : offsetIndex);
   const filename = useRandomFilenames ? `${_editionCount}_${sha1(_dna)}` : _editionCount;
+
+  if(addTextCounter) {
+    const _textCounter = textCounterConfig.template.replace('[edition]' , _editionCount);
+    // addText(
+    //   _textCounter,
+    //   textCounterConfig.x,
+    //   textCounterConfig.y,
+    //   textCounterConfig.fontSize
+    // );    
+
+    ctx.fillStyle = textCounterConfig.color;
+    ctx.font = `${textCounterConfig.weight} ${textCounterConfig.fontSize}pt ${textCounterConfig.family}`;
+    ctx.textBaseline = textCounterConfig.baseline;
+    ctx.textAlign = textCounterConfig.align;
+    ctx.fillText(_textCounter, textCounterConfig.x, textCounterConfig.y);
+
+  }
+
   fs.writeFileSync(
     `${buildDir}/images/${filename}.png`,
     canvas.toBuffer("image/png")

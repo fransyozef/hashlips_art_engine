@@ -10,6 +10,19 @@ const useRandomFilenames = false; // this will "mask" your png filenames
 const maskMetadataJsonFilename = false; // when true, the json metadata will be hashed
 const seedPhrase = 'CHANGE_THIS_TO_MAKE_YOUR_JSON_FILENAME_UNIQUE'; // will only be used when maskMetadataJsonFilename = true
 const offsetIndex = 0; // change the start counter of your filenames
+const addTextCounter = false; // set this to true and a text will appeear on top of your images , use textCounterConfig to configure
+const textCounterConfig = {
+  x: 0,
+  y: 0,
+  fontSize : 20,
+  template: 'I am number #[edition]',
+  color: "#ffffff",
+  align: "left",
+  baseline: "top",
+  weight: "regular",
+  family: "Courier",
+}
+// Custom features not by HashLips END
 
 // General metadata for Ethereum
 const namePrefix = "Your Collection";
@@ -131,4 +144,6 @@ module.exports = {
   maskMetadataJsonFilename,
   seedPhrase,
   offsetIndex,
+  addTextCounter,
+  textCounterConfig,
 };
