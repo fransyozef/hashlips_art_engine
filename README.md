@@ -275,7 +275,7 @@ Your metadata file will look something like this : `1_0x3B3D7CA6F14898CDAC93A5AB
 
 
 ## Empty filename
-If you have a png file name `empty.png', then this will not be included in the attributes. So this will prevent something like this
+If you have a png file name `empty.png` or with rarity for example `empty#50.png` , then this will not be included in the attributes. So this will prevent something like this
 
 
 ```
