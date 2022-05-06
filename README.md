@@ -284,8 +284,14 @@ If you have a png file name `empty.png` or with rarity for example `empty#50.png
       "trait_type": "Eyeball",
       "value": "empty"
     },
+  ]
 ```
-In this case the whole `Eyeball` trait will then not be generated
+In this case the whole `Eyeball` trait will then not be generated :
+
+```
+  "attributes": [
+  ]
+```
 
 ## Add a text counter
 
