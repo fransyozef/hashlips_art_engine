@@ -58,7 +58,9 @@ const layerConfigurations = [
 ```
 Notice that the `name` value is the same as your folder name in `/layers/`. The application will take the name and will look for your images in the folder with the EXACT name. 
 
-So in this example, the enginge will look in `/layers/Backgrounds/` folder.
+So in this example, the engine will look in `/layers/Backgrounds/` folder. 
+
+If that folder doesn't exists, the enginee WILL CRASH!!
 
 So if you have 
 
@@ -67,27 +69,12 @@ const layerConfigurations = [
   {
     growEditionSizeTo: 5,
     layersOrder: [
-      { name: "My Backgrounds" },
+      { name: "Backgroundss" },
     ],
   },
 ];
 ```
 But your folder name is called `/layers/Backgrounds` , then the application WILL CRASH!!!!
-
-This also goes if you have defined 
-
-```js
-const layerConfigurations = [
-  {
-    growEditionSizeTo: 5,
-    layersOrder: [
-      { name: "Backgrounds" },
-    ],
-  },
-];
-```
-
-and that folder  `/layers/Backgrounds/` does not exists (maybe you deleted it), then the application WILL CRASH!.
 
 
 ## Stacking your layers
