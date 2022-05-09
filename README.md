@@ -60,7 +60,7 @@ Notice that the `name` value ("Backgrounds") is the same as your folder name in 
 
 So in this example, the engine will look in `/layers/Backgrounds/` folder for your images.
 
-If that folder doesn't exists, the enginee WILL CRASH!!
+If that folder doesn't exists, the engine WILL CRASH!!
 
 So if you have 
 
