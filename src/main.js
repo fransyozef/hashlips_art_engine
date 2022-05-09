@@ -28,6 +28,7 @@ const {
   offsetIndex,
   addTextCounter,
   textCounterConfig,
+  removeMetaData
 } = require(`${basePath}/src/config.js`);
 const buildDir = `${basePath}/build`;
 const layersDir = `${basePath}/layers`;
@@ -357,6 +358,11 @@ const writeMetaData = (_data) => {
 const saveMetaDataSingleFile = (_editionCount) => {
   _editionCount = _editionCount + (offsetIndex > 0 ? offsetIndex -1 : offsetIndex);
   let metadata = metadataList.find((meta) => meta.edition == _editionCount);
+  removeMetaData.forEach((_metadata) => {
+    if(metadata[_metadata]) {
+        delete metadata[_metadata];
+    }
+  });
   debugLogs
     ? console.log(
         `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`

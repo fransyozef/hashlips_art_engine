@@ -22,6 +22,12 @@ const textCounterConfig = {
   weight: "regular",
   family: "Courier",
 }
+const removeMetaData = [
+  "edition",
+  "dna",
+  "date",
+  "compiler"
+];
 // Custom features not by HashLips END
 
 // General metadata for Ethereum
@@ -146,4 +152,5 @@ module.exports = {
   offsetIndex,
   addTextCounter,
   textCounterConfig,
+  removeMetaData,
 };
