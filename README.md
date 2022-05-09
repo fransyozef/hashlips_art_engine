@@ -325,6 +325,20 @@ const textCounterConfig = {
 }
 ```
 
+## Remove unwanted metadata
+The original HashLips engine generated metadata json files with metadata that are actually not needed. 
+
+In `config.js` you can find the list of keys that are unwanted and will not be included in the export :
+
+```js
+const removeMetaData = [
+  "edition",
+  "dna",
+  "date",
+  "compiler"
+];
+```
+
 
 ## Output Format
 Set your output format
