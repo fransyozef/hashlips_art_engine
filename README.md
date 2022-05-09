@@ -56,7 +56,7 @@ const layerConfigurations = [
   },
 ];
 ```
-Notice that the `name` value ("Backgrounds") is the same as your folder name in `/layers/` where you stored you png files. The application will take the name and will look for your images in the folder with the EXACT name. 
+Notice that the `name` value ("Backgrounds") is the same as your folder name in `/layers/` where you stored your png files. The application will take the name and will look for your images in the folder with the EXACT name. 
 
 So in this example, the engine will look in `/layers/Backgrounds/` folder for your images.
 
