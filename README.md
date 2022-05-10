@@ -259,25 +259,6 @@ In some cases, you want to start at a different offset.
 You can use the `offsetIndex` for that in the `config.js` file. Default is set to 0.
 Note! When the generation starts at 0, so if you put in 10, the numbering will start at 11.
 
-## Hashed png filenames
-At default, the png output file start with a number up to the `growEditionSizeTo` you have set. So for example 1.png, 2.png etc etc.
-
-This structure makes it easy target for snipers/webcrawlers to download all you files you have uploaded to a server (pinata/ipfs or your own server). To make it a little bit harder, there is the `useRandomFilenames` option in the `config.js` file. When you set this to `true` , then the filename will be same as the DN. For example sd3lkjdfg93.png
-
-## Hashed metadata json
-
-With `useRandomFilenames` you can hash your png filenames. You can also do this with the metadata json.
-
-It comes with 3 parts
-
-1) set `maskMetadataJsonFilename` to `true` in config.js
-2) set `seedPhrase` to a random phrase. You could use https://www.random.org/strings/ to generate some random string
-3) The smart contract also needs this seedPhrase. I (fransyozef) made a modified version of HashLips smart contract at https://github.com/fransyozef/nft-erc721-collection. Enter you seedPhrase in the config file : https://github.com/fransyozef/nft-erc721-collection/blob/main/smart-contract/config/CollectionConfig.ts#L36 before you deploy your contract
-
-
-Your metadata file will look something like this : `1_0x3B3D7CA6F14898CDAC93A5ABDB3680CBAD7192676AF76001EDD3BA65481003C3.json`. Make sure on the contract side, that the metadata url has the same json filename. 
-
-
 ## Empty filename
 If you have a png file name `empty.png` or with rarity for example `empty#50.png` , then this will not be included in the attributes. So this will prevent something like this
 
@@ -338,6 +319,24 @@ const removeMetaData = [
   "compiler"
 ];
 ```
+
+## Hashed png filenames (ADVANCED)
+At default, the png output file start with a number up to the `growEditionSizeTo` you have set. So for example 1.png, 2.png etc etc.
+
+This structure makes it easy target for snipers/webcrawlers to download all you files you have uploaded to a server (pinata/ipfs or your own server). To make it a little bit harder, there is the `useRandomFilenames` option in the `config.js` file. When you set this to `true` , then the filename will be same as the DN. For example sd3lkjdfg93.png
+
+## Hashed metadata json (ADVANCED)
+
+With `useRandomFilenames` you can hash your png filenames. You can also do this with the metadata json.
+
+It comes with 3 parts
+
+1) set `maskMetadataJsonFilename` to `true` in config.js
+2) set `seedPhrase` to a random phrase. You could use https://www.random.org/strings/ to generate some random string
+3) The smart contract also needs this seedPhrase. I (fransyozef) made a modified version of HashLips smart contract at https://github.com/fransyozef/nft-erc721-collection. Enter you seedPhrase in the config file : https://github.com/fransyozef/nft-erc721-collection/blob/main/smart-contract/config/CollectionConfig.ts#L36 before you deploy your contract
+
+
+Your metadata file will look something like this : `1_0x3B3D7CA6F14898CDAC93A5ABDB3680CBAD7192676AF76001EDD3BA65481003C3.json`. Make sure on the contract side, that the metadata url has the same json filename. 
 
 
 ## Output Format
