@@ -23,8 +23,6 @@ const textCounterConfig = {
   family: "Courier",
 }
 const removeMetaData = [
-  "edition",
-  "dna",
   "date",
   "compiler"
 ];
